@@ -1,0 +1,42 @@
+<div class="w-full">
+  <div [hidden]="!formStatus.isChecked || form.valid" class="bg-white p-6 rounded-lg mb-3">
+    <div class="justify-end flex">
+      <p class="text-sm cursor-pointer" (click)="formStatus.isChecked = false">&#10060;</p>
+    </div>
+    <ul *ngFor="let error of Object.values(formStatus.errors)">
+      <p class="text-red-600">{{error}}</p>
+    </ul>
+  </div>
+  <div [hidden]="!requestStatus.fetch" class="bg-white p-6 rounded-lg mb-3">
+      <p [ngClass]="requestStatus.success ? 'text-green-600' : 'text-red-600' ">{{requestStatus.message}}</p>
+  </div>
+  <form [formGroup]="form" (submit)="register()" class="bg-white shadow-md rounded-lg px-16 py-16">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+        Adresse mail
+      </label>
+      <input (focus)="clearErrors()" formControlName="email" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="foo@gmail.com">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Mot de passe
+      </label>
+      <input (focus)="clearErrors()" formControlName="password" id="password" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="**********" >
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="passwordConfirm">
+        Confirmation du mot de passe
+      </label>
+      <input (focus)="clearErrors()" formControlName="passwordConfirm"  id="passwordConfirm" class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="**********" >
+    </div>
+    <div class="flex flex-col gap-2">
+      <button type="submit" class="p-2 rounded bg-cyan-500 text-white">S'inscrire</button>
+<!--      <div class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-500 to-pink-500 animate-spin">-->
+<!--        <div class="h-9 w-9 rounded-full bg-gray-200"></div>-->
+<!--      </div>-->
+
+
+      <a class="text-cyan-600" routerLink="/login">Déjà un compte ?</a>
+    </div>
+  </form>
+</div>
