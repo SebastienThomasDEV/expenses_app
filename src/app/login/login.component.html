@@ -1,21 +1,35 @@
-<div class="w-full max-w-xs">
-  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-        Adresse mail
-      </label>
-      <input [(ngModel)]="userData.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="foo@gmail.com">
+<div class="h-screen w-screen flex">
+    <div class="flex-1 flex items-center justify-center">
+        <img src="assets/undraw_marketing_re_7f1g.svg" alt="">
     </div>
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-        Mot de passe
-      </label>
-      <input [(ngModel)]="userData.password" id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="**********" >
-      <p></p>
+    <div class="flex-1 bg-[#6C63FF] flex items-center justify-center flex flex-col">
+
+        <div class="w-full px-12">
+            <form [formGroup]="loginForm" (submit)="loginProcess()"
+                  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                        Adresse mail
+                    </label>
+                    <input formControlName="email"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           id="email" type="email" placeholder="foo@gmail.com">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                        Mot de passe
+                    </label>
+                    <input formControlName="password" id="password"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           type="password" placeholder="**********">
+                    <p></p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <button class="p-2 rounded bg-[#6C63FF] text-white">Connexion</button>
+                    <a class="text-[#6C63FF]" routerLink="/register">Pas encore inscrit ?</a>
+                </div>
+            </form>
+        </div>
+
     </div>
-    <div class="flex flex-col gap-2">
-      <button class="p-2 rounded bg-cyan-500 text-white" (click)="login()">Connexion</button>
-      <a class="text-cyan-600" routerLink="/register">Pas encore de compte ?</a>
-    </div>
-  </div>
 </div>

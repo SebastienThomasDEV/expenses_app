@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { LoginService } from "../login.service";
+import UserCredentials from "../interface/UserCredentials";
+import {FormGroup, ReactiveFormsModule} from "@angular/forms"
+import {Router} from "@angular/router";
+import {loginForm} from "./loginForm";
+
 
 @Component({
   selector: 'app-login',
@@ -6,11 +12,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-    userData = {
-        email: '',
-        password: ''
+    form = loginForm
+    constructor(protected loginService: LoginService, protected router: Router) {
+
     }
-    login() : void {
-        console.log(`email: ${this.userData.email} password: ${this.userData.password}`);
+
+    loginProcess(): void {
+        let user: UserCredentials = {
+            email: this.form.controls["email"].value,
+            password: this.form.controls["password"].value
+        }
+        this.loginService.getToken(user).subscribe(response => {
+            localStorage.setItem("token", response.token)
+            localStorage.setItem("email", response.email)
+            localStorage.setItem("id", response.id)
+            return this.router.navigate(['/dashboard'])
+        })
     }
+
+    protected readonly loginForm = loginForm;
 }
