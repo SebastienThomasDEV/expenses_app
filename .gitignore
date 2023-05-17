@@ -14,8 +14,9 @@ month.txt
 
 # Include when developing application packages.
 pubspec.lock
+.angular/cache
 .c9
-.idea/
+idea/
 .devcontainer/*
 !.devcontainer/README.md
 !.devcontainer/recommended-devcontainer.json
