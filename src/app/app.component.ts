@@ -24,7 +24,15 @@ export class AppComponent {
     return this.user.token != null;
   }
 
+  private checkTokenExpired() {
+    // TODO: check if token is expired
+
+  }
+
   ngOnInit() {
-    if (this.autoConnect()) this.router.navigate(['/dashboard'])
+    if (this.autoConnect()) {
+      this.router.navigate(['/dashboard'])
+    }
+
   }
 }

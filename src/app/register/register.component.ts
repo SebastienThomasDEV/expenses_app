@@ -3,10 +3,10 @@ import {registerForm } from "./registerForm";
 import {FormGroup, ReactiveFormsModule} from "@angular/forms"
 import User from '../interface/User'
 import UserCredentials from '../interface/UserCredentials'
-import {RegisterService} from "../register.service"
+import {RegisterService} from "../services/register.service"
 import {Router} from "@angular/router"
 import requestStatus from "../interface/requestStatus"
-import {LoginService} from "../login.service";
+import {LoginService} from "../services/login.service";
 
 
 
@@ -23,9 +23,6 @@ export class RegisterComponent {
   messageAfterRegister: string = ""
 
 
-  text() {
-    console.log(this.form)
-  }
 
   register(): void {
     if (this.form.valid) {

@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExpenseComponent } from './expense/expense.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {NgOptimizedImage} from "@angular/common";
+import { ExpenseFormComponent } from './expense-form/expense-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {NgOptimizedImage} from "@angular/common";
     LoginComponent,
     RegisterComponent,
     ExpenseComponent,
-    DashboardComponent
+    DashboardComponent,
+    ExpenseFormComponent
   ],
     imports: [
         BrowserModule,

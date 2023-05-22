@@ -1,0 +1,42 @@
+<p>it worst</p>
+<form [formGroup]="expenseForm" (submit)="onSubmit()">
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
+            date
+        </label>
+        <input formControlName="date"
+               class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="date" type="date" required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+            description
+        </label>
+        <input formControlName="description"
+                  id="description"
+               class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
+            catégorie
+        </label>
+        <input formControlName="category"
+               id="category"
+               type="text"
+                  class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
+            amount
+        </label>
+        <input formControlName="amount"
+               type="number"
+               id="amount"
+               class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               required>
+    </div>
+    <button>submit</button>
+
+</form>
