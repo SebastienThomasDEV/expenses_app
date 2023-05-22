@@ -14,6 +14,8 @@ export class AppComponent {
   constructor(private router : Router) {}
   protected readonly Component = Component;
   protected readonly LoginComponent = LoginComponent;
+
+  // TODO: redifine the user interface to match each component that uses it
   user: UserData = {
     email: localStorage?.getItem("email"),
     token: localStorage?.getItem("token"),
@@ -25,7 +27,7 @@ export class AppComponent {
   }
 
   private checkTokenExpired() {
-    // TODO: check if token is expired
+    // TODO: check if token is expired and add the logic to refresh it
 
   }
 

@@ -35,6 +35,7 @@ export class ExpenseFormComponent {
     try {
         this.expenseService.addExpense(expense).subscribe((data: any) => {
             console.log(data);
+            // TODO: fix it throws an error when the expense is added "Invalid IRI (values: 1) for parameter id.)"
         })
     } catch (error) {
         console.log(error);
