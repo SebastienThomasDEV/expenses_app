@@ -3,39 +3,47 @@
         <img src="assets/undraw_marketing_re_7f1g.svg" alt="">
     </div>
     <div class="flex-1 bg-[#6C63FF] flex items-center justify-center flex flex-col ">
+        <div (click)="text()">test</div>
         <div class="w-full px-12">
             <form [formGroup]="form" (submit)="register()" class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Adresse mail
                     </label>
-                    <input (focus)="clearErrors()" formControlName="email"
+                    <input formControlName="email"
                            class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                           id="email" type="email" placeholder="foo@gmail.com">
+                           id="email" type="email" placeholder="foo@gmail.com" required>
+
+                    <div *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)" class="text-red-600 text-sm flex flex-col w-full">
+                            <span *ngIf="registerForm.controls['email'].errors?.['required']">Le champs est obligatoire</span>
+                            <span *ngIf="registerForm.controls['email'].errors?.['email']">Format non valide</span>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                         Mot de passe
                     </label>
-                    <input (focus)="clearErrors()" formControlName="password" id="password"
+                    <input formControlName="password" id="password"
                            class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                           type="password" placeholder="**********">
+                           type="password" placeholder="**********" required>
+                    <div *ngIf="(registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty )|| registerForm.controls['password'].touched)" class="text-red-600 text-sm flex flex-col w-full">
+                        <span *ngIf="registerForm.controls['password'].errors?.['required']">Le champs est obligatoire</span>
+                        <span *ngIf="registerForm.controls['password'].errors?.['minlength']">Le mot de passe doit faire au moins 6 caractères</span>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="passwordConfirm">
                         Confirmation du mot de passe
                     </label>
-                    <input (focus)="clearErrors()" formControlName="passwordConfirm" id="passwordConfirm"
+                    <input formControlName="passwordConfirm" id="passwordConfirm"
                            class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                           type="password" placeholder="**********">
+                           type="password" placeholder="**********" required>
+                    <div *ngIf="(registerForm.controls['passwordConfirm'].invalid && (registerForm.controls['passwordConfirm'].dirty) || registerForm.controls['passwordConfirm'].touched)" class="text-red-600 text-sm flex flex-col w-full">
+                        <span *ngIf="registerForm?.errors?.['isNotMatching']">Les mots de passes doivent être identiques</span>
+                    </div>
                 </div>
                 <div class="flex flex-col gap-2">
                     <button type="submit" class="p-2 rounded bg-[#6C63FF] text-white">S'inscrire</button>
-                    <!--      <div class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-500 to-pink-500 animate-spin">-->
-                    <!--        <div class="h-9 w-9 rounded-full bg-gray-200"></div>-->
-                    <!--      </div>-->
-
-
                     <a class="text-[#6C63FF]" routerLink="/login">Déjà un compte ?</a>
                 </div>
             </form>

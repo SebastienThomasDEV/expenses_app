@@ -22,10 +22,9 @@ export class RegisterComponent {
   form = registerForm
   messageAfterRegister: string = ""
 
-  requestStatus: requestStatus = {
-    fetch: false,
-    success: false,
-    message: ""
+
+  text() {
+    console.log(this.form)
   }
 
   register(): void {
@@ -36,11 +35,6 @@ export class RegisterComponent {
       }
       try {
         this.registerService.registerInDatabase(user).subscribe(user => {
-          // this.requestStatus= {
-          //   fetch: true,
-          //   success: response.success,
-          //   message: response.message
-          // }
           let userCredentials: UserCredentials = {
             email: user.email,
             password: this.form.controls["password"].value
@@ -48,6 +42,7 @@ export class RegisterComponent {
           this.loginService.getToken(userCredentials).subscribe(response => {
             localStorage.setItem("token", response.token)
             localStorage.setItem("id", user.id)
+            localStorage.setItem("email", user.email)
             return this.router.navigate(['/dashboard'])
           })
         })
@@ -60,11 +55,6 @@ export class RegisterComponent {
 
 
 
-  clearErrors(): void {
-    this.requestStatus.fetch = false;
-    this.requestStatus.message = "";
-  }
-
-
   protected readonly Object = Object;
+    protected readonly registerForm = registerForm;
 }

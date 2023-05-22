@@ -9,6 +9,7 @@ import UserData from "../interface/UserData";
 })
 export class DashboardComponent {
 
+
     user: UserData = {
         email: localStorage.getItem("email"),
         token: localStorage.getItem("token"),
@@ -17,10 +18,11 @@ export class DashboardComponent {
     constructor(private router: Router) {
     }
 
+    test() {
+       console.log(this.user)
+    }
     logout() : Promise<Boolean>   {
-        localStorage.removeItem("token")
-        localStorage.removeItem("id")
-        localStorage.removeItem("email")
+        localStorage.clear()
         return this.router.navigate(['/login'])
     }
 
