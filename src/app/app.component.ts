@@ -20,10 +20,6 @@ export class AppComponent {
 
     }
 
-    protected readonly Component = Component;
-    protected readonly LoginComponent = LoginComponent;
-
-    // TODO: redifine the user interface to match each component that uses it
     user: UserData = {
         token: localStorage.getItem("token") ?? null,
         id: localStorage.getItem("id") ?? null,

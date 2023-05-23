@@ -34,7 +34,7 @@ export class LoginComponent {
             localStorage.setItem("token", response.token)
             localStorage.setItem("id", response.user.id)
             this.snackbarService.createSnackbar("success", "Connexion réussie", 2000)
-            return this.router.navigate(['/dashboard'], {state: {data: userData}})
+            return this.router.navigate(['/dashboard'])
         })
     }
 
