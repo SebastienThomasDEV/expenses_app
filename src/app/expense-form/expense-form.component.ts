@@ -23,6 +23,7 @@ export class ExpenseFormComponent {
   }
 
 
+
   onSubmit() {
 
     const expense: Expense = {
@@ -30,12 +31,11 @@ export class ExpenseFormComponent {
         category: this.expenseForm.value.category,
         description: this.expenseForm.value.description,
         amount: this.expenseForm.value.amount,
-        userEntity: this.user.id,
+        userEntity: "api/users/" + this.user.id,
     }
     try {
         this.expenseService.addExpense(expense).subscribe((data: any) => {
             console.log(data);
-            // TODO: fix it throws an error when the expense is added "Invalid IRI (values: 1) for parameter id.)"
         })
     } catch (error) {
         console.log(error);

@@ -1,5 +1,8 @@
+import Expense from "./Expense";
+
 export default interface UserData {
-    email: string | null
-    token: string | null
     id: string | null
+    token: string | null
+    email: string | null
+    expenses?: Expense[]
 }

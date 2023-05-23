@@ -9,7 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExpenseComponent } from './expense/expense.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {NgOptimizedImage} from "@angular/common";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
+import {JwtHelperService, JWT_OPTIONS} from "@auth0/angular-jwt";
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -26,9 +29,14 @@ import { ExpenseFormComponent } from './expense-form/expense-form.component';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        NgOptimizedImage
+        BrowserAnimationsModule,
+        NgOptimizedImage,
+        ToastrModule.forRoot()
     ],
-  providers: [],
+  providers: [
+        { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+        JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

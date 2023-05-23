@@ -16,6 +16,7 @@ export class LoginService {
     return this.http.post(this.tokenUrl, user).pipe(map((data: any) => data))
   }
 
+
   getUser() : Observable<any> {
     let token = localStorage.getItem("token")
     let headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)

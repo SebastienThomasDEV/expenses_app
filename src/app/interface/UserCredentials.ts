@@ -1,4 +1,5 @@
 export default interface UserCredentials {
     email:  string
-    password: string
+    password?: string
+    plainPassword: string
 }

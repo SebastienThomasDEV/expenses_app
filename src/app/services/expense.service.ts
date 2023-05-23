@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, map} from "rxjs";
-import User from "../interface/User";
 import Expense from "../interface/Expense";
 
 @Injectable({
@@ -13,7 +12,6 @@ export class ExpenseService {
   token = localStorage.getItem("token")
   id = localStorage.getItem("id")
   expenseUrl = "https://127.0.0.1:8000/api/expenses"
-  userUrl = `127.0.0.1:8000/api/users/${this.id})}`
   headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
   constructor(private http: HttpClient) {
 
