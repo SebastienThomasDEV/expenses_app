@@ -25,7 +25,6 @@ export class AppComponent {
 
     // TODO: redifine the user interface to match each component that uses it
     user: UserData = {
-        email: localStorage.getItem("email") ?? null,
         token: localStorage.getItem("token") ?? null,
         id: localStorage.getItem("id") ?? null,
     }

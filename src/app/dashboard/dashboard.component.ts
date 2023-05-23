@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import UserData from "../interface/UserData";
+import Expense from "../interface/Expense";
+import {ExpenseService} from "../services/expense.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -9,21 +11,26 @@ import UserData from "../interface/UserData";
 })
 export class DashboardComponent {
 
-
     user: UserData = {
-        email: localStorage.getItem("email"),
-        token: localStorage.getItem("token"),
-        id: localStorage.getItem("id"),
-    }
-    constructor(private router: Router) {
+        token:history.state.data?.token || localStorage.getItem("token"),
+        id: history.state.data?.id || localStorage.getItem("id"),
     }
 
-    test() {
-       console.log(this.user)
+    expenses: Expense[] = []
+    constructor(private router: Router, private expenseService: ExpenseService) {}
+
+    ngOnInit() {
+        if (!this.user.token) {
+            this.router.navigate(['/login'])
+        }
     }
     logout() : Promise<Boolean>   {
         localStorage.clear()
         return this.router.navigate(['/login'])
+    }
+
+    getExpenses() {
+
     }
 
 }

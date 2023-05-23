@@ -5,6 +5,8 @@ import UserCredentials from '../interface/UserCredentials'
 import {RegisterService} from "../services/register.service"
 import {Router} from "@angular/router"
 import {LoginService} from "../services/login.service";
+import {SnackbarService} from "../services/snackbar.service";
+import {data} from "autoprefixer";
 
 
 
@@ -16,7 +18,7 @@ import {LoginService} from "../services/login.service";
 })
 export class RegisterComponent {
 
-  constructor(protected registerService: RegisterService, protected router: Router, private loginService: LoginService) {}
+  constructor(protected registerService: RegisterService, protected router: Router, private loginService: LoginService, private snackbarService: SnackbarService) {}
   form = registerForm
   messageAfterRegister: string = ""
 
@@ -29,12 +31,11 @@ export class RegisterComponent {
         plainPassword: this.form.controls["password"].value,
       }
       try {
-        this.registerService.registerInDatabase(user).subscribe(response => {
+        this.registerService.register(user).subscribe(response => {
           user.password = response.password
           this.loginService.getToken(user).subscribe(response => {
             localStorage.setItem("token", response.token)
-            localStorage.setItem("id", response.id)
-            localStorage.setItem("email", response.email)
+            this.snackbarService.createSnackbar("success", "Inscription réussie", 2000)
             return this.router.navigate(['/dashboard'])
           })
         })

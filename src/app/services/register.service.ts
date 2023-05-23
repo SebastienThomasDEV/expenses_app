@@ -13,7 +13,7 @@ export class RegisterService {
   registerUrl: string = "https://127.0.0.1:8000/api/users";
   constructor(private http: HttpClient) {}
 
-  registerInDatabase(user: UserCredentials) : Observable<any> {
+  register(user: UserCredentials) : Observable<any> {
     return this.http.post(this.registerUrl, user).pipe(map((data: any) => data))
   }
 }
