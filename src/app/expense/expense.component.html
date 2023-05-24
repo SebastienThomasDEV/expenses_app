@@ -1,33 +1,35 @@
-<div class="flex justify-between p-2">
-    <button (click)="toogleForm()" class="p-2 bg-[#6C63FF] rounded text-white m-2 hover:opacity-80">Créer une dépense</button>
-    <div class="flex items-center">
-        <div class="flex flex-col">
-            <label for="categoryFilters">Par catégories</label>
-            <select class="" id="categoryFilters">
-                <option value="">Tous</option>
-                <option value="">Date</option>
-                <option value="">Montant</option>
-            </select>
+<div class="flex p-2 justify-between">
+    <button (click)="toogleForm()" class="p-2 bg-[#6C63FF] rounded text-white m-2 hover:opacity-80">Créer une dépense
+    </button>
+    <div class="flex gap-4">
+        <button (click)="toogleFilter()">
+            <fa-icon class="text-xl" [icon]="faFilter"></fa-icon>
+        </button>
+        <div *ngIf="!openFilters" class="flex items-center gap-2">
+            <div class="relative inline-flex">
+                <fa-icon class="w-2 h-2 absolute top-1 right-4 pointer-events-none" [icon]="faSortDown"></fa-icon>
+                <select name="" class="border border-gray-300 rounded text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <option value="">Toutes les catégories</option>
+                    <option *ngFor="let expense of user.expenses ">{{expense.category}}</option>
+                </select>
+            </div>
+            <input type="date" id="dateFilters" class="p-2 m-2 border rounded">
+            <input type="text" name="searchFilters" id="" class="p-2 m-2 border rounded" placeholder="🔍 Rechercher une dépense">
         </div>
-        <div class="flex flex-col">
-            <label for="dateFilters">Par date</label>
-            <input type="date" id="dateFilters">
-        </div>
-        <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
-        <input type="text" name="" id="" class="p-2 m-2 border rounded" placeholder="Rechercher une dépense">
     </div>
 
 </div>
-<app-expense-form *ngIf="openFilters"></app-expense-form>
+<app-expense-form *ngIf="openForm"></app-expense-form>
 <div class="grid md:grid-cols-2 gap-4 mx-2">
-    <div *ngFor="let expense of user.expenses ">
+    <div *ngFor="let expense of user.expenses">
+        <div *ngIf="expense.date "></div>
         <div class="px-10  py-6 bg-white rounded-lg shadow-md">
             <div class="flex justify-between items-center">
                 <span class="font-light text-gray-600">{{expense.date | date }}</span>
-                <span class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500" href="#">{{expense.amount}} $</span>
+                <span class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">{{expense.amount}} €</span>
             </div>
             <div class="mt-2">
-                <span class="text-xl text-gray-700 font-bold hover:text-gray-600" href="#">{{expense.description}}</span>
+                <span class="text-xl text-gray-700 font-bold hover:text-gray-600">{{expense.description}}</span>
             </div>
             <div class="flex justify-between items-center mt-4">
                 <a class="text-blue-600 hover:underline" href="#"></a>
@@ -35,3 +37,13 @@
         </div>
     </div>
 </div>
+
+<!--<div *ngFor="let expense of user.expenses">-->
+<!--    {{expense.date | date}}-->
+<!--</div>-->
+
+<!--<div *ngFor="let date of dates">-->
+<!--    {{date}}-->
+<!--</div>-->
+<div>{{dateInterval.start}}</div>
+<div>{{dateInterval.end}}</div>

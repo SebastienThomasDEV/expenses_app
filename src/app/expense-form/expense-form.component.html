@@ -1,5 +1,5 @@
 
-<form [formGroup]="expenseForm" (submit)="onSubmit()" class="flex p-8 bg-white shadow-xl m-2 w-fit rounded-2xl gap-2">
+<form [formGroup]="expenseForm" (submit)="onSubmit()" class="flex p-8 bg-white shadow-xl m-2 w-full rounded-2xl gap-2">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
             date
@@ -29,7 +29,7 @@
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
-            Montant ?
+            Montant ? (€)
         </label>
         <input formControlName="amount"
                type="number"

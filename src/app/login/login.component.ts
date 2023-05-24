@@ -17,7 +17,6 @@ import Expense from "../interface/Expense";
 export class LoginComponent {
     form = loginForm
     constructor(protected loginService: LoginService, protected router: Router, private snackbarService: SnackbarService) {
-
     }
 
     loginProcess(): void {

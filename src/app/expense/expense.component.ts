@@ -4,7 +4,7 @@ import { ExpenseService } from '../services/expense.service';
 import { expenseForm } from '../expense-form/expenseForm';
 import Expense from "../interface/Expense";
 import UserData from "../interface/UserData";
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faFilter, faSortDown, faList } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-expense',
@@ -16,6 +16,10 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 export class ExpenseComponent {
     faMagnifyingGlass = faMagnifyingGlass;
+    faFilter = faFilter;
+    faSortDown = faSortDown;
+    faList = faList;
+
     openForm: boolean = false;
     openFilters: boolean = false;
     user: UserData = {
@@ -23,6 +27,12 @@ export class ExpenseComponent {
         token: localStorage.getItem('token'),
         expenses: []
     }
+    dateInterval: {start: Date, end: Date} = {
+        start: new Date(),
+        end: new Date()
+    }
+    dates: Date[] = []
+
 
     constructor(private expenseService: ExpenseService) { }
 
@@ -38,8 +48,18 @@ export class ExpenseComponent {
         this.expenseService.getExpenses(this.user.id!, this.user.token!).subscribe((data: any) => {
             data.forEach((expense: Expense) => {
                 this.user.expenses?.push(expense)
+                this.dates.push(new Date(expense.date))
+                this.dates.sort((a, b) => a.getTime() - b.getTime())
+                this.dateInterval.start = this.dates[0]
+                this.dateInterval.end = this.dates[this.dates.length - 1]
             })
+            this.sortExpenses()
         })
+    }
+
+    sortExpenses() {
+        // TODO: sort expenses by date transform date into unix timestamp
+        this.user.expenses?.sort((a, b) => a.date - b.date)
     }
 
 
