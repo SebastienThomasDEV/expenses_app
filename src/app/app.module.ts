@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import {JwtHelperService, JWT_OPTIONS} from "@auth0/angular-jwt";
 import { ToastrModule } from 'ngx-toastr';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ToastrModule } from 'ngx-toastr';
         HttpClientModule,
         BrowserAnimationsModule,
         NgOptimizedImage,
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        FontAwesomeModule
     ],
   providers: [
         { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

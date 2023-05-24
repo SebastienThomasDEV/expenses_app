@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../expenses_api/.idea/expenses_api.iml" filepath="$PROJECT_DIR$/../expenses_api/.idea/expenses_api.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/expenses_app.iml" filepath="$PROJECT_DIR$/.idea/expenses_app.iml" />
     </modules>
   </component>

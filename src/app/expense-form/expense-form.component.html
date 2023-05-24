@@ -1,5 +1,5 @@
-<p>it worst</p>
-<form [formGroup]="expenseForm" (submit)="onSubmit()">
+
+<form [formGroup]="expenseForm" (submit)="onSubmit()" class="flex p-8 bg-white shadow-xl m-2 w-fit rounded-2xl gap-2">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
             date
@@ -29,7 +29,7 @@
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
-            amount
+            Montant ?
         </label>
         <input formControlName="amount"
                type="number"
@@ -37,6 +37,6 @@
                class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                required>
     </div>
-    <button>submit</button>
+    <button class="p-2 bg-[#6C63FF] rounded text-white m-2 h-fit hover:opacity-80">Ajouter la dépense</button>
 
 </form>

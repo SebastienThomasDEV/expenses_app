@@ -4,6 +4,7 @@ import { ExpenseService } from '../services/expense.service';
 import { expenseForm } from '../expense-form/expenseForm';
 import Expense from "../interface/Expense";
 import UserData from "../interface/UserData";
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-expense',
@@ -14,24 +15,32 @@ import UserData from "../interface/UserData";
 
 
 export class ExpenseComponent {
-
-    onEdit: boolean = false;
+    faMagnifyingGlass = faMagnifyingGlass;
+    openForm: boolean = false;
+    openFilters: boolean = false;
     user: UserData = {
         id: localStorage.getItem('id'),
         token: localStorage.getItem('token'),
+        expenses: []
     }
 
     constructor(private expenseService: ExpenseService) { }
 
     toogleForm() {
-        this.onEdit = !this.onEdit;
+        this.openForm = !this.openForm;
+    }
+
+    toogleFilter() {
+        this.openFilters = !this.openFilters;
     }
 
     ngOnInit(): void {
-        console.log(this.user);
         this.expenseService.getExpenses(this.user.id!, this.user.token!).subscribe((data: any) => {
-            console.log(data);
+            data.forEach((expense: Expense) => {
+                this.user.expenses?.push(expense)
+            })
         })
     }
+
 
 }
