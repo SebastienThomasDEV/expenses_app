@@ -12,8 +12,8 @@ import {ExpenseService} from "../services/expense.service";
 export class DashboardComponent {
 
     user: UserData = {
-        token:history.state.data?.token || localStorage.getItem("token"),
-        id: history.state.data?.id || localStorage.getItem("id"),
+        token:localStorage.getItem("token"),
+        id: localStorage.getItem("id"),
     }
 
     expenses: Expense[] = []

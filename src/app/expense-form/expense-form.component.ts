@@ -6,6 +6,7 @@ import UserData from "../interface/UserData";
 import {ExpenseService} from "../services/expense.service";
 import {ToastrService} from "ngx-toastr";
 import {SnackbarService} from "../services/snackbar.service";
+import {dateToUnix} from "../utilities/dateFormat";
 
 @Component({
     selector: 'app-expense-form',
@@ -26,8 +27,9 @@ export class ExpenseFormComponent {
 
 
     onSubmit() {
+
         const expense: Expense = {
-            date: new Date(this.expenseForm.value.date),
+            date: this.expenseForm.value.date,
             category: this.expenseForm.value.category,
             description: this.expenseForm.value.description,
             amount: this.expenseForm.value.amount,
