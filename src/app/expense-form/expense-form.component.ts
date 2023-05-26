@@ -27,14 +27,9 @@ export class ExpenseFormComponent {
 
 
     onSubmit() {
+        const expense: Expense = this.expenseForm.value
+        expense.userEntity = "/api/users/" + this.user.id
 
-        const expense: Expense = {
-            date: this.expenseForm.value.date,
-            category: this.expenseForm.value.category,
-            description: this.expenseForm.value.description,
-            amount: this.expenseForm.value.amount,
-            userEntity: "api/users/" + this.user.id,
-        }
         try {
             this.expenseService.addExpense(expense, this.user.token!).subscribe((data: any) => {
                 this.snackbarService.createSnackbar("success", "Dépense ajoutée", 2000)

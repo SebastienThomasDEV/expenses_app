@@ -6,11 +6,35 @@ import Expense from "../interface/Expense";
 import UserData from "../interface/UserData";
 import { faMagnifyingGlass, faFilter, faSortDown, faList } from '@fortawesome/free-solid-svg-icons';
 import { dateToUnix, unixToDate } from '../utilities/dateFormat';
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-expense',
   templateUrl: './expense.component.html',
-  styleUrls: ['./expense.component.scss']
+  styleUrls: ['./expense.component.scss'],
+    animations: [
+        trigger(
+            'inOutAnimation',
+            [
+                transition(
+                    ':enter',
+                    [
+                        style({ transform: 'translateX(-100%)'}),
+                        animate('0.5s ease-out',
+                            style({ transform: 'translateX(0)'}))
+                    ]
+                ),
+                transition(
+                    ':leave',
+                    [
+                        style({ height: 300, opacity: 1 }),
+                        animate('1s ease-in',
+                            style({ height: 0, opacity: 0 }))
+                    ]
+                )
+            ]
+        )
+    ]
 })
 
 
@@ -34,13 +58,6 @@ export class ExpenseComponent {
 
     constructor(private expenseService: ExpenseService) { }
 
-    toogleForm() {
-        this.openForm = !this.openForm;
-    }
-
-    toogleFilter() {
-        this.openFilters = !this.openFilters;
-    }
 
     ngOnInit(): void {
         this.expenseService.getExpenses(this.user.id!, this.user.token!).subscribe((expenses: Expense[]) => {
