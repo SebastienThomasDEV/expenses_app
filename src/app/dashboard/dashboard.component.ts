@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import UserData from "../interface/UserData";
 import Expense from "../interface/Expense";
 import {ExpenseService} from "../services/expense.service";
+import {SnackbarService} from "../services/snackbar.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +18,7 @@ export class DashboardComponent {
     }
 
     expenses: Expense[] = []
-    constructor(private router: Router, private expenseService: ExpenseService) {}
+    constructor(private router: Router, private expenseService: ExpenseService,private snackbarService: SnackbarService) {}
 
     ngOnInit() {
         if (!this.user.token) {
@@ -29,8 +30,16 @@ export class DashboardComponent {
         return this.router.navigate(['/login'])
     }
 
-    getExpenses() {
+    submitExpense(expense: Expense) {
+        try {
+            this.expenseService.addExpense(expense, this.user.token!).subscribe((data: any) => {
+                console.log(data);
+            this.snackbarService.createSnackbar("success", "Dépense ajoutée", 2000)
+            })
 
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 }

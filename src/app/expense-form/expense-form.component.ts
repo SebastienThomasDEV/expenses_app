@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {expenseForm} from "./expenseForm";
 import Expense from "../interface/Expense";
@@ -16,7 +16,9 @@ import {dateToUnix} from "../utilities/dateFormat";
 
 export class ExpenseFormComponent {
 
-    constructor(protected expenseService: ExpenseService, private snackbarService: SnackbarService) {
+    @Output() newExpenseEvent = new EventEmitter();
+
+    constructor(protected expenseService: ExpenseService) {
     }
 
     expenseForm = expenseForm;
@@ -26,18 +28,12 @@ export class ExpenseFormComponent {
     }
 
 
+
     onSubmit() {
         const expense: Expense = this.expenseForm.value
         expense.userEntity = "/api/users/" + this.user.id
-
-        try {
-            this.expenseService.addExpense(expense, this.user.token!).subscribe((data: any) => {
-                this.snackbarService.createSnackbar("success", "Dépense ajoutée", 2000)
-                this.expenseForm.reset()
-            })
-        } catch (error) {
-            console.log(error);
-        }
+        this.newExpenseEvent.emit(expense)
+        this.expenseForm.reset()
     }
 }
 
