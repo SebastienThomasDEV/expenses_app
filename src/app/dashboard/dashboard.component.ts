@@ -5,19 +5,48 @@ import Expense from "../interface/Expense";
 import {ExpenseService} from "../services/expense.service";
 import {SnackbarService} from "../services/snackbar.service";
 import {dateToUnix} from "../utilities/dateFormat";
+import {animate, style, transition, trigger} from "@angular/animations";
+import {faSortDown} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+    animations: [
+        trigger('showForm', [
+            transition(
+                ':enter',
+                [
+                    style({ transform: 'translateX(100%)' }),
+                    animate('0.3s ease-out',
+                        style({ transform: 'translateX(0)' }))
+                ]
+            ),
+            transition(
+                ':leave',
+                [
+                    animate('0.3s ease-in',
+                        style({ transform: 'translateX(100%)'  }))
+                ]
+            )
+        ])
+    ]
 })
 export class DashboardComponent {
-    @Input() expense: Expense | null | undefined
+    @Input() expenseEventData?: object
     user: UserData = {
         token:localStorage.getItem("token"),
         id: localStorage.getItem("id"),
         expenses: []
     }
+    formState: boolean = false;
+    toggleFormState() {
+        this.formState = !this.formState
+    }
+
+
+
+
 
     dates: number[] = []
     sortedDates: string[] = []
@@ -41,14 +70,23 @@ export class DashboardComponent {
                 this.snackbarService.createSnackbar("success", "Dépense ajoutée", 2000)
             })
             this.getExpenses()
+            this.formState = !this.formState
         } catch (error) {
             console.log(error);
         }
     }
 
+    handleExpense(expenseData: any) {
+        if (expenseData.action === 'delete') {
+            this.deleteExpense(expenseData.expense)
+        } else if (expenseData.action === 'edit') {
+            this.editExpense(expenseData.expense)
+        }
+    }
+
     deleteExpense(expense: Expense) {
         try {
-            this.expenseService.deleteExpense(expense, this.user.token!).subscribe((data: any) => {
+            this.expenseService.deleteExpense(expense, this.user.token!).subscribe((_: any) => {
                 this.snackbarService.createSnackbar("success", "Dépense supprimée", 2000)
                 this.getExpenses()
             })
@@ -71,6 +109,10 @@ export class DashboardComponent {
         })
     }
 
+    editExpense(expense: Expense) {
+
+    }
+
     sortExpenses(expenses: Expense[]) {
         return expenses.sort((a, b) => dateToUnix(a.date) - dateToUnix(b.date))
     }
@@ -80,4 +122,5 @@ export class DashboardComponent {
     }
 
     protected readonly console = console;
+    protected readonly faSortDown = faSortDown;
 }

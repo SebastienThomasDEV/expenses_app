@@ -1,5 +1,5 @@
 
-<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="flex flex-col bg-white p-4 shadow-xl w-full  gap-2">
+<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="flex flex-col bg-white p-4 shadow-xl w-full rounded-2xl gap-2">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
             Date de la dépense
@@ -37,6 +37,6 @@
                class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                required>
     </div>
-    <button class="p-2 bg-[#6C63FF] rounded text-white h-fit hover:opacity-80 w-fit">Ajouter la dépense</button>
+    <button class="p-2 bg-[#6C63FF] rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90">Créer la dépense</button>
 
 </form>

@@ -27,7 +27,30 @@
                 </svg>
             </a>
         </nav>
-        <app-expense-form (newExpenseEvent)="addExpense($event)"></app-expense-form>
-        <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates" (deleteExpenseEvent)="deleteExpense($event)" ></app-expense>
+        <div class="flex justify-between">
+            <span (click)="toggleFormState()" class="bg-[#6C63FF] w-fit p-2 text-white rounded m-4 cursor-pointer hover:scale-105 hover:opacity-90">Ajouter une dépense</span>
+            <div class="flex p-2 justify-between">
+                <div class="flex gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="relative inline-flex">
+                            <fa-icon class="w-2 h-2 absolute top-1 right-4 pointer-events-none" [icon]="faSortDown"></fa-icon>
+                            <select name=""
+                                    class="border border-gray-300 rounded text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                                <option value="">Toutes les catégories</option>
+                                <option *ngFor="let expense of user.expenses ">{{expense.category}}</option>
+                            </select>
+                        </div>
+                        <input type="date" id="dateFilters" class="p-2 m-2 border rounded">
+                        <input type="text" name="searchFilters" id="" class="p-2 m-2 border rounded"
+                               placeholder="🔍 Rechercher une dépense">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex">
+            <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates" (expenseEvent)="handleExpense($event)" class="w-full"></app-expense>
+            <app-expense-form [@showForm]="formState" *ngIf="formState" (newExpenseEvent)="addExpense($event)"></app-expense-form>
+        </div>
 
     </section>

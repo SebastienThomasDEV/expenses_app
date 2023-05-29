@@ -16,10 +16,9 @@ import {dateToUnix} from "../utilities/dateFormat";
 
 export class ExpenseFormComponent {
 
-    @Output() newExpenseEvent = new EventEmitter();
+    @Output() newExpenseEvent: EventEmitter<any> = new EventEmitter();
 
-    constructor(protected expenseService: ExpenseService) {
-    }
+    constructor(protected expenseService: ExpenseService) {}
 
     expenseForm = expenseForm;
     user: UserData = {

@@ -22,7 +22,7 @@ export class ExpenseComponent {
     faTrashCan = faTrashCan
     @Input() expenses: Expense[] | null | undefined = []
     @Input() sortedDates : string [] | null | undefined = []
-    @Output() deleteExpenseEvent = new EventEmitter();
+    @Output() expenseEvent: EventEmitter<any> = new EventEmitter();
 
 
     constructor() { }
@@ -31,9 +31,15 @@ export class ExpenseComponent {
         console.log(this.expenses);
     }
 
-    deleteExpense(expense: Expense) {
-        this.deleteExpenseEvent.emit(expense)
+    expenseTrigger(expense: Expense, action: string) {
+        this.expenseEvent.emit({
+            expense: expense,
+            action: action
+        })
     }
+
+
+
 
 
     protected readonly console = console;

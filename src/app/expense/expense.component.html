@@ -1,21 +1,4 @@
-<div class="flex p-2 justify-between">
 
-    <div class="flex gap-4">
-        <div class="flex items-center gap-2">
-            <div class="relative inline-flex">
-                <fa-icon class="w-2 h-2 absolute top-1 right-4 pointer-events-none" [icon]="faSortDown"></fa-icon>
-                <select name=""
-                        class="border border-gray-300 rounded text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                    <option value="">Toutes les catégories</option>
-                    <option *ngFor="let expense of expenses ">{{expense.category}}</option>
-                </select>
-            </div>
-            <input type="date" id="dateFilters" class="p-2 m-2 border rounded">
-            <input type="text" name="searchFilters" id="" class="p-2 m-2 border rounded"
-                   placeholder="🔍 Rechercher une dépense">
-        </div>
-    </div>
-</div>
 <div *ngFor="let date of sortedDates" class="m-6">
     <span class="font-semibold text-2xl text-blue-950 border-b">Vos dépenses du {{date | date: "dd/MM/YYYY"}}</span>
     <div class="grid lg:grid-cols-2 gap-6">
@@ -26,8 +9,8 @@
                     <div class="text-sm px-3 bg-yellow-200 text-yellow-800 rounded-full w-fit">{{expense.category}}</div>
                     <div class="flex gap-4">
                         <span class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">{{expense.amount}}€</span>
-                        <span><fa-icon class="text-lg" [icon]="faPenToSquare"  (click)="console.log(expense, 'edit')"></fa-icon></span>
-                        <span><fa-icon class="text-lg" [icon]="faTrashCan"  (click)="deleteExpense(expense)"></fa-icon></span>
+                        <span><fa-icon class="text-lg" [icon]="faPenToSquare" (click)="expenseTrigger(expense, 'edit')"></fa-icon></span>
+                        <span><fa-icon class="text-lg" [icon]="faTrashCan"  (click)="expenseTrigger(expense, 'delete')"></fa-icon></span>
                     </div>
                 </div>
                 <div class="mt-2">
