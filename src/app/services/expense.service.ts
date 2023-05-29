@@ -22,5 +22,10 @@ export class ExpenseService {
     return this.http.get(`${this.expenseUrl}?userEntity=${user_id}`, {headers: headers}).pipe(map((data: any) => data))
   }
 
+  deleteExpense(expense: Expense, token: string) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
+    return this.http.delete(`${this.expenseUrl}/${expense.id}`, {headers: headers}).pipe(map((data: any) => data))
+  }
+
 
 }

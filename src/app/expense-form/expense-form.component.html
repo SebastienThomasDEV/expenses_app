@@ -1,8 +1,8 @@
 
-<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="flex p-8 bg-white shadow-xl m-2 w-full rounded-2xl gap-2">
+<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="flex flex-col bg-white p-4 shadow-xl w-full  gap-2">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
-            date
+            Date de la dépense
         </label>
         <input formControlName="date"
                class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -10,7 +10,7 @@
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
-            description
+            Description
         </label>
         <input formControlName="description"
                   id="description"
@@ -19,7 +19,7 @@
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
-            catégorie
+            Catégorie de la dépense
         </label>
         <input formControlName="category"
                id="category"
@@ -37,6 +37,6 @@
                class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                required>
     </div>
-    <button class="p-2 bg-[#6C63FF] rounded text-white m-2 h-fit hover:opacity-80">Ajouter la dépense</button>
+    <button class="p-2 bg-[#6C63FF] rounded text-white h-fit hover:opacity-80 w-fit">Ajouter la dépense</button>
 
 </form>

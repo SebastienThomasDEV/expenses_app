@@ -5,3 +5,4 @@ export function dateToUnix(date: number): number {
 export function unixToDate(unix: number): Date {
     return new Date(unix * 1000)
 }
+

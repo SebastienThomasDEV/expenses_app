@@ -27,6 +27,7 @@
                 </svg>
             </a>
         </nav>
-        <app-expense-form (newExpenseEvent)="expense")></app-expense-form>
-        <app-expense></app-expense>
+        <app-expense-form (newExpenseEvent)="addExpense($event)"></app-expense-form>
+        <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates" (deleteExpenseEvent)="deleteExpense($event)" ></app-expense>
+
     </section>
