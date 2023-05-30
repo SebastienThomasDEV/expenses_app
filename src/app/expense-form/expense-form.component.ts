@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {expenseForm} from "./expenseForm";
 import Expense from "../interface/Expense";
@@ -17,6 +17,7 @@ import {dateToUnix} from "../utilities/dateFormat";
 export class ExpenseFormComponent {
 
     @Output() newExpenseEvent: EventEmitter<any> = new EventEmitter();
+    @Input() expenseEditData?: any
 
     constructor(protected expenseService: ExpenseService) {}
 
@@ -24,6 +25,10 @@ export class ExpenseFormComponent {
     user: UserData = {
         id: localStorage.getItem('id'),
         token: localStorage.getItem('token'),
+    }
+
+    async ngOnInit() {
+        await this.expenseEditData ? this.expenseForm.patchValue(this.expenseEditData) : null
     }
 
 

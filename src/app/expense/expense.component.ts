@@ -28,7 +28,6 @@ export class ExpenseComponent {
     constructor() { }
 
     ngOnInit() {
-        console.log(this.expenses);
     }
 
     expenseTrigger(expense: Expense, action: string) {

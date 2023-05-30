@@ -50,7 +50,7 @@
         </div>
         <div class="flex">
             <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates" (expenseEvent)="handleExpense($event)" class="w-full"></app-expense>
-            <app-expense-form [@showForm]="formState" *ngIf="formState" (newExpenseEvent)="addExpense($event)"></app-expense-form>
+            <app-expense-form [@showForm]="formState" *ngIf="formState" [expenseEditData]="expenseEditEvent" (newExpenseEvent)="addExpense($event)"></app-expense-form>
         </div>
 
     </section>

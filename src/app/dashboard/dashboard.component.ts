@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import UserData from "../interface/UserData";
 import Expense from "../interface/Expense";
@@ -9,24 +9,24 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {faSortDown} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
     animations: [
         trigger('showForm', [
             transition(
                 ':enter',
                 [
-                    style({ transform: 'translateX(100%)' }),
+                    style({transform: 'translateX(100%)'}),
                     animate('0.3s ease-out',
-                        style({ transform: 'translateX(0)' }))
+                        style({transform: 'translateX(0)'}))
                 ]
             ),
             transition(
                 ':leave',
                 [
                     animate('0.3s ease-in',
-                        style({ transform: 'translateX(100%)'  }))
+                        style({transform: 'translateX(100%)'}))
                 ]
             )
         ])
@@ -34,32 +34,31 @@ import {faSortDown} from "@fortawesome/free-solid-svg-icons";
 })
 export class DashboardComponent {
     @Input() expenseEventData?: object
+    @Output() expenseEditEvent: EventEmitter<any> = new EventEmitter();
     user: UserData = {
-        token:localStorage.getItem("token"),
+        token: localStorage.getItem("token"),
         id: localStorage.getItem("id"),
         expenses: []
     }
     formState: boolean = false;
+
     toggleFormState() {
         this.formState = !this.formState
     }
-
-
-
-
-
     dates: number[] = []
     sortedDates: string[] = []
 
-    constructor(private router: Router, private expenseService: ExpenseService,private snackbarService: SnackbarService) {}
+    constructor(private router: Router, private expenseService: ExpenseService, private snackbarService: SnackbarService) {
+    }
 
-    async ngOnInit() {
+    ngOnInit() {
         if (!this.user.token) {
             this.router.navigate(['/login'])
         }
-        await this.getExpenses()
+        this.getExpenses()
     }
-    logout() : Promise<Boolean>   {
+
+    logout(): Promise<Boolean> {
         localStorage.clear()
         return this.router.navigate(['/login'])
     }
@@ -105,12 +104,12 @@ export class DashboardComponent {
             })
             this.sortedDates = this.sortDates(this.dates)
             this.user.expenses = this.sortExpenses(this.user.expenses)
-            console.log('expense is called');
         })
     }
 
     editExpense(expense: Expense) {
-
+        this.toggleFormState()
+        return this.expenseEditEvent.emit(expense)
     }
 
     sortExpenses(expenses: Expense[]) {
