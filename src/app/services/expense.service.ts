@@ -8,24 +8,31 @@ import Expense from "../interface/Expense";
 })
 export class ExpenseService {
   expenseUrl = "https://127.0.0.1:8000/api/expenses"
+  token = localStorage.getItem("token")!
   constructor(private http: HttpClient) {
 
   }
 
-  addExpense(expense: Expense, token: string) : Observable<any> {
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
+  addExpense(expense: Expense) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
     return this.http.post(this.expenseUrl, expense, {headers: headers}).pipe(map((data: any) => data))
   }
 
-  getExpenses(user_id:string, token: string) : Observable<any> {
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
+  getExpenses(user_id:string) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
     return this.http.get(`${this.expenseUrl}?userEntity=${user_id}`, {headers: headers}).pipe(map((data: any) => data))
   }
 
-  deleteExpense(expense: Expense, token: string) : Observable<any> {
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${token}`)
+  deleteExpense(expense: Expense) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
     return this.http.delete(`${this.expenseUrl}/${expense.id}`, {headers: headers}).pipe(map((data: any) => data))
   }
+
+  updateExpense(updatedExpense: Expense, expenseId: number ) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`).set("Content-Type", "application/merge-patch+json")
+    return this.http.patch(`${this.expenseUrl}/${expenseId}`, updatedExpense, {headers: headers}).pipe(map((data: any) => data))
+  }
+
 
 
 }

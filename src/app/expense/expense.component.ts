@@ -22,7 +22,8 @@ export class ExpenseComponent {
     faTrashCan = faTrashCan
     @Input() expenses: Expense[] | null | undefined = []
     @Input() sortedDates : string [] | null | undefined = []
-    @Output() expenseEvent: EventEmitter<any> = new EventEmitter();
+    @Output() expenseDeleteEvent: EventEmitter<any> = new EventEmitter();
+    @Output() expenseUpdateEvent: EventEmitter<any> = new EventEmitter();
 
 
     constructor() { }
@@ -30,11 +31,12 @@ export class ExpenseComponent {
     ngOnInit() {
     }
 
-    expenseTrigger(expense: Expense, action: string) {
-        this.expenseEvent.emit({
-            expense: expense,
-            action: action
-        })
+    expenseUpdate(expense: Expense) {
+        this.expenseUpdateEvent.emit(expense)
+    }
+
+    expenseDelete(expense: Expense) {
+        this.expenseDeleteEvent.emit(expense)
     }
 
 

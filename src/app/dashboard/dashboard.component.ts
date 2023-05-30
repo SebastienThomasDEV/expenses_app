@@ -7,6 +7,7 @@ import {SnackbarService} from "../services/snackbar.service";
 import {dateToUnix} from "../utilities/dateFormat";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {faSortDown} from "@fortawesome/free-solid-svg-icons";
+import Request from "../interface/Request";
 
 @Component({
     selector: 'app-dashboard',
@@ -33,69 +34,82 @@ import {faSortDown} from "@fortawesome/free-solid-svg-icons";
     ]
 })
 export class DashboardComponent {
-    @Input() expenseEventData?: object
-    @Output() expenseEditEvent: EventEmitter<any> = new EventEmitter();
+
     user: UserData = {
         token: localStorage.getItem("token"),
         id: localStorage.getItem("id"),
         expenses: []
     }
     formState: boolean = false;
+    expense?: Expense;
 
-    toggleFormState() {
-        this.formState = !this.formState
-    }
     dates: number[] = []
     sortedDates: string[] = []
 
     constructor(private router: Router, private expenseService: ExpenseService, private snackbarService: SnackbarService) {
     }
-
-    ngOnInit() {
-        if (!this.user.token) {
-            this.router.navigate(['/login'])
-        }
-        this.getExpenses()
-    }
-
     logout(): Promise<Boolean> {
         localStorage.clear()
         return this.router.navigate(['/login'])
     }
 
-    addExpense(expense: Expense) {
-        try {
-            this.expenseService.addExpense(expense, this.user.token!).subscribe((data: any) => {
-                this.snackbarService.createSnackbar("success", "Dépense ajoutée", 2000)
-            })
-            this.getExpenses()
-            this.formState = !this.formState
-        } catch (error) {
-            console.log(error);
+    ngOnInit(): Promise<Boolean> {
+        if (!this.user.token) {
+            this.logout()
         }
+        this.getExpenses()
+        return Promise.resolve(true)
+    }
+    toggleFormState() {
+        this.formState = !this.formState
     }
 
-    handleExpense(expenseData: any) {
-        if (expenseData.action === 'delete') {
-            this.deleteExpense(expenseData.expense)
-        } else if (expenseData.action === 'edit') {
-            this.editExpense(expenseData.expense)
+    handleExpenseRequest(request: Request) {
+        if (request.fulfilled) {
+            switch (request.requestType) {
+                case "POST":
+                    this.snackbarService.createSnackbar("success", "Dépense ajoutée", 2000)
+                    this.toggleFormState()
+                    this.refreshExpenses()
+                    this.expense = undefined
+                    break;
+                case "PATCH":
+                    this.snackbarService.createSnackbar("success", "Dépense modifiée", 2000)
+                    this.toggleFormState()
+                    this.refreshExpenses()
+                    this.expense = undefined
+                    break;
+            }
+        } else {
+            this.snackbarService.createSnackbar("error", "Une erreur est survenue", 2000)
+            console.log(request.error);
         }
+
     }
 
+
+    refreshExpenses() {
+        this.getExpenses()
+    }
     deleteExpense(expense: Expense) {
         try {
-            this.expenseService.deleteExpense(expense, this.user.token!).subscribe((_: any) => {
+            this.expenseService.deleteExpense(expense).subscribe((_: any) => {
                 this.snackbarService.createSnackbar("success", "Dépense supprimée", 2000)
-                this.getExpenses()
+                this.refreshExpenses()
             })
         } catch (error) {
             console.log(error);
         }
+    }
+
+    editExpense(expense: Expense) {
+        this.expense = expense
+        this.toggleFormState()
     }
 
     getExpenses() {
-        this.expenseService.getExpenses(this.user.id!, this.user.token!).subscribe((expenses: Expense[]) => {
+        // TODO: Faire une requeste dans le backend (et pas dans le front) pour récupérer les dépenses de l'utilisateur par rapport à la date
+        this.expenseService.getExpenses(this.user.id!).subscribe((expenses: Expense[]) => {
             this.user.expenses = []
             this.dates = []
             this.user.expenses = expenses
@@ -107,10 +121,6 @@ export class DashboardComponent {
         })
     }
 
-    editExpense(expense: Expense) {
-        this.toggleFormState()
-        return this.expenseEditEvent.emit(expense)
-    }
 
     sortExpenses(expenses: Expense[]) {
         return expenses.sort((a, b) => dateToUnix(a.date) - dateToUnix(b.date))

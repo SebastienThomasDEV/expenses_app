@@ -9,14 +9,13 @@
                     <div class="text-sm px-3 bg-yellow-200 text-yellow-800 rounded-full w-fit">{{expense.category}}</div>
                     <div class="flex gap-4">
                         <span class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">{{expense.amount}}€</span>
-                        <span><fa-icon class="text-lg" [icon]="faPenToSquare" (click)="expenseTrigger(expense, 'edit')"></fa-icon></span>
-                        <span><fa-icon class="text-lg" [icon]="faTrashCan"  (click)="expenseTrigger(expense, 'delete')"></fa-icon></span>
+                        <span><fa-icon class="text-lg" [icon]="faPenToSquare" (click)="expenseUpdate(expense)"></fa-icon></span>
+                        <span><fa-icon class="text-lg" [icon]="faTrashCan"  (click)="expenseDelete(expense)"></fa-icon></span>
                     </div>
                 </div>
                 <div class="mt-2">
                     <span class="text-xl text-gray-700 font-bold hover:text-gray-600">{{expense.description}}</span>
                 </div>
-
             </div>
         </ng-container>
     </div>
