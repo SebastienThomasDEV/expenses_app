@@ -5,6 +5,7 @@ import Request from "../interface/Request";
 import UserData from "../interface/UserData";
 import {ExpenseService} from "../services/expense.service";
 import {FormMode} from "../form-mode";
+import {faPenToSquare, faXmark} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({
@@ -16,8 +17,11 @@ import {FormMode} from "../form-mode";
 export class ExpenseFormComponent {
 
     @Output() responseEvent: EventEmitter<any> = new EventEmitter();
-
     @Input() expenseUpdate?: any;
+    @Output() handleForm: EventEmitter<any> = new EventEmitter();
+
+
+    faXmark = faXmark;
 
     formMode?: FormMode;
 
@@ -95,6 +99,13 @@ export class ExpenseFormComponent {
         }
     }
 
+    toggleForm() {
+        const cancel = true
+        this.handleForm.emit(cancel)
+    }
+
+
+
 
     onSubmit() {
         switch (this.formMode) {
@@ -113,5 +124,7 @@ export class ExpenseFormComponent {
 
         }
     }
+
+    protected readonly faPenToSquare = faPenToSquare;
 }
 

@@ -43,5 +43,8 @@ export class ExpenseComponent {
 
 
 
+
+
+
     protected readonly console = console;
 }

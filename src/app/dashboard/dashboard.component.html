@@ -27,9 +27,8 @@
                 </svg>
             </a>
         </nav>
-        <div class="flex justify-between">
-            <span (click)="toggleFormState()" class="bg-[#6C63FF] w-fit p-2 text-white rounded m-4 cursor-pointer hover:scale-105 hover:opacity-90">Ajouter une dépense</span>
-            <div class="flex p-2 justify-between">
+        <div class="flex items-center justify-between">
+            <div class="flex p-2 m-4">
                 <div class="flex gap-4">
                     <div class="flex items-center gap-2">
                         <div class="relative inline-flex">
@@ -43,14 +42,16 @@
                         <input type="date" id="dateFilters" class="p-2 m-2 border rounded">
                         <input type="text" name="searchFilters" id="" class="p-2 m-2 border rounded"
                                placeholder="🔍 Rechercher une dépense">
+                        <button class="h-fit bg-[#6C63FF]  p-2 text-white rounded cursor-pointer hover:scale-105 hover:opacity-90">Rechercher</button>
                     </div>
                 </div>
             </div>
+            <span (click)="toggleFormState()" *ngIf="!formState" class="h-fit bg-green-600 m-6 p-2 text-white rounded cursor-pointer hover:scale-105 hover:opacity-90">Ajouter une dépense</span>
 
         </div>
         <div class="flex">
-            <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates"  (expenseUpdateEvent)="editExpense($event)" (expenseDeleteEvent)="deleteExpense($event)" class="w-full"></app-expense>
-            <app-expense-form [@showForm]="formState" *ngIf="formState" [expenseUpdate]="expense" (responseEvent)="handleExpenseRequest($event)"></app-expense-form>
+            <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates" (expenseUpdateEvent)="editExpense($event)" (expenseDeleteEvent)="deleteExpense($event)" class="w-full"></app-expense>
+            <app-expense-form [@showForm]="formState" *ngIf="formState" [expenseUpdate]="expense" (handleForm)="toggleFormState($event)" (responseEvent)="handleExpenseRequest($event)"></app-expense-form>
         </div>
 
     </section>

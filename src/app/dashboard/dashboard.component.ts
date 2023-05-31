@@ -34,17 +34,18 @@ import Request from "../interface/Request";
     ]
 })
 export class DashboardComponent {
+    protected readonly console = console;
+    protected readonly faSortDown = faSortDown;
 
-    user: UserData = {
+    protected user: UserData = {
         token: localStorage.getItem("token"),
         id: localStorage.getItem("id"),
         expenses: []
     }
-    formState: boolean = false;
-    expense?: Expense;
-
-    dates: number[] = []
-    sortedDates: string[] = []
+    protected formState: boolean = false;
+    protected expense?: Expense;
+    private dates: number[] = []
+    protected sortedDates: string[] = []
 
     constructor(private router: Router, private expenseService: ExpenseService, private snackbarService: SnackbarService) {
     }
@@ -60,7 +61,10 @@ export class DashboardComponent {
         this.getExpenses()
         return Promise.resolve(true)
     }
-    toggleFormState() {
+    toggleFormState(cancel?: any) {
+        if (cancel) {
+            this.expense = undefined
+        }
         this.formState = !this.formState
     }
 
@@ -130,6 +134,4 @@ export class DashboardComponent {
         return [...new Set(dates.map((date: number) => date.toString().split('T')[0]))].sort()
     }
 
-    protected readonly console = console;
-    protected readonly faSortDown = faSortDown;
 }

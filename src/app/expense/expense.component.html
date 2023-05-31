@@ -6,11 +6,11 @@
             <div  *ngIf="expense.date.toString().includes(date)"  class="relative px-10 py-6 bg-white rounded-lg shadow-md border cursor-pointer hover:shadow-xl">
                 <div class="flex justify-between items-center">
                     <span class="font-light text-gray-600">{{expense.date | date:'dd/MM/YYYY à hh:mm'}}</span>
-                    <div class="text-sm px-3 bg-yellow-200 text-yellow-800 rounded-full w-fit">{{expense.category}}</div>
+                    <div class="text-sm px-3 bg-blue-600 text-white rounded-full w-fit">{{expense.category}}</div>
                     <div class="flex gap-4">
                         <span class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">{{expense.amount}}€</span>
-                        <span><fa-icon class="text-lg" [icon]="faPenToSquare" (click)="expenseUpdate(expense)"></fa-icon></span>
-                        <span><fa-icon class="text-lg" [icon]="faTrashCan"  (click)="expenseDelete(expense)"></fa-icon></span>
+                        <span><fa-icon class="text-lg text-yellow-500" [icon]="faPenToSquare" (click)="expenseUpdate(expense)"></fa-icon></span>
+                        <span><fa-icon class="text-lg text-red-600" [icon]="faTrashCan"  (click)="expenseDelete(expense)"></fa-icon></span>
                     </div>
                 </div>
                 <div class="mt-2">
