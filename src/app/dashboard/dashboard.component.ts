@@ -8,6 +8,7 @@ import {dateToUnix} from "../utilities/dateFormat";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {faSortDown} from "@fortawesome/free-solid-svg-icons";
 import Request from "../interface/Request";
+import Category from "../interface/Category";
 
 @Component({
     selector: 'app-dashboard',
@@ -44,7 +45,7 @@ export class DashboardComponent {
     }
     protected formStateExpense: boolean = false;
     protected formStateCategory: boolean = false;
-
+    protected category?: Category;
     protected expense?: Expense;
     private dates: number[] = []
     protected sortedDates: string[] = []
@@ -57,9 +58,15 @@ export class DashboardComponent {
     }
     toggleFormCategory(cancel?: any) {
         if (cancel) {
-            console.log(cancel)
+            this.category = undefined
         }
         this.formStateCategory = !this.formStateCategory
+    }
+    toggleFormExpense(cancel?: any) {
+        if (cancel) {
+            this.expense = undefined
+        }
+        this.formStateExpense = !this.formStateExpense
     }
 
 
@@ -69,12 +76,6 @@ export class DashboardComponent {
         }
         this.getExpenses()
         return Promise.resolve(true)
-    }
-    toggleFormExpense(cancel?: any) {
-        if (cancel) {
-            this.expense = undefined
-        }
-        this.formStateExpense = !this.formStateExpense
     }
 
     handleExpenseRequest(request: Request) {
@@ -99,6 +100,29 @@ export class DashboardComponent {
         }
 
     }
+    handleCategoryRequest(request: Request) {
+        if (request.fulfilled) {
+            switch (request.requestType) {
+                case "POST":
+                    this.snackbarService.createSnackbar("success", "Categorie ajoutée", 2000)
+                    this.toggleFormCategory()
+                    this.refreshExpenses()
+                    this.category = undefined
+                    break;
+                case "PATCH":
+                    this.snackbarService.createSnackbar("success", "Categorie modifiée", 2000)
+                    this.toggleFormCategory()
+                    this.refreshExpenses()
+                    this.category = undefined
+                    break;
+            }
+        } else {
+            this.snackbarService.createSnackbar("error", "Une erreur est survenue", 2000)
+            // console.log(request.error);
+        }
+
+    }
+
 
 
     refreshExpenses() {

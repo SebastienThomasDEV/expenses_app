@@ -3,7 +3,7 @@ import Category from "./Category";
 export default interface Expense {
     id?: string;
     date: number;
-    category: string;
+    category: Category;
     description: string;
     amount: number;
     userEntity: string | null;

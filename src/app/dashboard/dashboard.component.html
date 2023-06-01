@@ -55,7 +55,7 @@
         <div class="flex">
             <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates" (expenseUpdateEvent)="editExpense($event)" (expenseDeleteEvent)="deleteExpense($event)" class="w-full"></app-expense>
             <app-expense-form [@showForm]="formStateExpense" *ngIf="formStateExpense" [expenseUpdate]="expense" (handleForm)="toggleFormExpense($event)" (responseEvent)="handleExpenseRequest($event)"></app-expense-form>
-            <app-category-form class="m-4" [@showForm]="formStateCategory" *ngIf="formStateCategory" (handleForm)="toggleFormCategory($event)"></app-category-form>
+            <app-category-form class="m-4"  [@showForm]="formStateCategory" *ngIf="formStateCategory" (handleForm)="toggleFormCategory($event)" (responseEvent)="handleCategoryRequest($event)" ></app-category-form>
         </div>
 
     </section>
