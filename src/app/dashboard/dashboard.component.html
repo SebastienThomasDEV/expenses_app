@@ -46,12 +46,16 @@
                     </div>
                 </div>
             </div>
-            <span (click)="toggleFormState()" *ngIf="!formState" class="h-fit bg-green-600 m-6 p-2 text-white rounded cursor-pointer hover:scale-105 hover:opacity-90">Ajouter une dépense</span>
+            <div class="flex">
+                <span (click)="toggleFormCategory()" *ngIf="!formStateCategory" class="h-fit bg-green-600 mr-2 p-2 text-white rounded cursor-pointer hover:scale-105 hover:opacity-90">Ajouter une catégorie</span>
+                <span (click)="toggleFormExpense()" *ngIf="!formStateExpense" class="h-fit bg-green-600 mr-6 p-2 text-white rounded cursor-pointer hover:scale-105 hover:opacity-90">Ajouter une dépense</span>
+            </div>
 
         </div>
         <div class="flex">
             <app-expense [expenses]="user.expenses" [sortedDates]="sortedDates" (expenseUpdateEvent)="editExpense($event)" (expenseDeleteEvent)="deleteExpense($event)" class="w-full"></app-expense>
-            <app-expense-form [@showForm]="formState" *ngIf="formState" [expenseUpdate]="expense" (handleForm)="toggleFormState($event)" (responseEvent)="handleExpenseRequest($event)"></app-expense-form>
+            <app-expense-form [@showForm]="formStateExpense" *ngIf="formStateExpense" [expenseUpdate]="expense" (handleForm)="toggleFormExpense($event)" (responseEvent)="handleExpenseRequest($event)"></app-expense-form>
+            <app-category-form class="m-4" [@showForm]="formStateCategory" *ngIf="formStateCategory" (handleForm)="toggleFormCategory($event)"></app-category-form>
         </div>
 
     </section>

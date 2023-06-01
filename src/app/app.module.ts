@@ -14,6 +14,7 @@ import { ExpenseFormComponent } from './expense-form/expense-form.component';
 import {JwtHelperService, JWT_OPTIONS} from "@auth0/angular-jwt";
 import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CategoryFormComponent } from './category-form/category-form.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     RegisterComponent,
     ExpenseComponent,
     DashboardComponent,
-    ExpenseFormComponent
+    ExpenseFormComponent,
+    CategoryFormComponent
   ],
     imports: [
         BrowserModule,

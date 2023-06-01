@@ -42,7 +42,9 @@ export class DashboardComponent {
         id: localStorage.getItem("id"),
         expenses: []
     }
-    protected formState: boolean = false;
+    protected formStateExpense: boolean = false;
+    protected formStateCategory: boolean = false;
+
     protected expense?: Expense;
     private dates: number[] = []
     protected sortedDates: string[] = []
@@ -53,6 +55,13 @@ export class DashboardComponent {
         localStorage.clear()
         return this.router.navigate(['/login'])
     }
+    toggleFormCategory(cancel?: any) {
+        if (cancel) {
+            console.log(cancel)
+        }
+        this.formStateCategory = !this.formStateCategory
+    }
+
 
     ngOnInit(): Promise<Boolean> {
         if (!this.user.token) {
@@ -61,11 +70,11 @@ export class DashboardComponent {
         this.getExpenses()
         return Promise.resolve(true)
     }
-    toggleFormState(cancel?: any) {
+    toggleFormExpense(cancel?: any) {
         if (cancel) {
             this.expense = undefined
         }
-        this.formState = !this.formState
+        this.formStateExpense = !this.formStateExpense
     }
 
     handleExpenseRequest(request: Request) {
@@ -73,20 +82,20 @@ export class DashboardComponent {
             switch (request.requestType) {
                 case "POST":
                     this.snackbarService.createSnackbar("success", "Dépense ajoutée", 2000)
-                    this.toggleFormState()
+                    this.toggleFormExpense()
                     this.refreshExpenses()
                     this.expense = undefined
                     break;
                 case "PATCH":
                     this.snackbarService.createSnackbar("success", "Dépense modifiée", 2000)
-                    this.toggleFormState()
+                    this.toggleFormExpense()
                     this.refreshExpenses()
                     this.expense = undefined
                     break;
             }
         } else {
             this.snackbarService.createSnackbar("error", "Une erreur est survenue", 2000)
-            console.log(request.error);
+            // console.log(request.error);
         }
 
     }
@@ -108,7 +117,7 @@ export class DashboardComponent {
 
     editExpense(expense: Expense) {
         this.expense = expense
-        this.toggleFormState()
+        this.toggleFormExpense()
     }
 
     getExpenses() {

@@ -1,0 +1,29 @@
+
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="flex flex-col bg-white p-4 shadow-xl w-full rounded-2xl gap-2">
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+            Titre de la catégorie
+        </label>
+        <input formControlName="title"
+               class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="title" type="text" required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="color">
+            Couleur de la catégorie
+        </label>
+        <input formControlName="color" #color
+               id="color"
+               type="color"
+               class="form-control shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               required>
+        <span class="ml-4">{{color.value}}</span>
+    </div>
+    <div class="flex justify-between gap-2">
+            <button class="p-2 flex-1 bg-green-600 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90">
+                Créer la catégorie
+            </button>
+        <div class="p-2 bg-red-500 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90 cursor-pointer" (click)="toggleForm()">Annuler</div>
+    </div>
+
+</form>
