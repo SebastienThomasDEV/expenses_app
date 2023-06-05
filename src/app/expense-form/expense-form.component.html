@@ -1,5 +1,5 @@
-
-<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="flex flex-col bg-white p-4 shadow-xl w-full rounded-2xl gap-2">
+<form [formGroup]="expenseForm" (ngSubmit)="onSubmit()"
+      class="flex flex-col bg-white p-4 shadow-xl w-full rounded-2xl gap-2">
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="date">
             Date de la dépense
@@ -13,19 +13,26 @@
             Description
         </label>
         <input formControlName="description"
-                  id="description"
+               id="description"
                class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  required>
+               required>
     </div>
     <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
+        <div class="block text-gray-700 text-sm font-bold mb-2">
             Catégorie de la dépense
-        </label>
-        <input formControlName="category"
-               id="category"
-               type="text"
-                  class="form-control shadow appearance-none border rounded w-fit py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  required>
+        </div>
+        <div class="flex gap-2">
+            <div class="relative inline-flex w-full rounded">
+                <fa-icon class="w-2 h-2 absolute top-1 right-4 pointer-events-none" [icon]="faSortDown"></fa-icon>
+                <select formControlName="category" name="category"
+                        class="border shadow rounded w-full text-gray-600 h-10 pl-5 pr-10 bg-white focus:outline-none appearance-none">
+                    <option *ngFor="let category of categories" title="{{category.color}}" value="{{category.id}}" (click)="color.style.backgroundColor = category.color">
+                        {{category.title}}
+                    </option>
+                </select>
+            </div>
+            <div #color class="border h-10 w-10 rounded-lg"></div>
+        </div>
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="amount">
@@ -38,13 +45,18 @@
                required>
     </div>
     <div class="flex justify-between gap-2">
-        <button *ngIf="expenseUpdate; else elseBlock" class="p-2 flex-1 bg-yellow-600 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90">Modifier la dépense</button>
-        <ng-template #elseBlock class="p-2 flex-1 bg-green-600 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90">
+        <button *ngIf="expenseUpdate; else elseBlock"
+                class="p-2 flex-1 bg-yellow-600 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90">
+            Modifier la dépense
+        </button>
+        <ng-template #elseBlock
+                     class="p-2 flex-1 bg-green-600 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90">
             <button class="p-2 flex-1 bg-green-600 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90">
                 Créer la dépense
             </button>
         </ng-template>
-        <div class="p-2 bg-red-500 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90 cursor-pointer" (click)="toggleForm()">Annuler</div>
+        <div class="p-2 bg-red-500 rounded text-white h-fit w-fit hover:scale-105 hover:opacity-90 cursor-pointer"
+             (click)="toggleForm()">Annuler
+        </div>
     </div>
-
 </form>

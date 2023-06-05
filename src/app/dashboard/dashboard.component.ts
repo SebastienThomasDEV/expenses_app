@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import UserData from "../interface/UserData";
-import Expense from "../interface/Expense";
+import {ExpenseResponse} from "../interface/ExpenseResponse";
 import {ExpenseService} from "../services/expense.service";
 import {SnackbarService} from "../services/snackbar.service";
 import {dateToUnix} from "../utilities/dateFormat";
@@ -9,6 +9,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {faSortDown} from "@fortawesome/free-solid-svg-icons";
 import Request from "../interface/Request";
 import Category from "../interface/Category";
+import {CategoryService} from "../services/category.service";
 
 @Component({
     selector: 'app-dashboard',
@@ -46,11 +47,13 @@ export class DashboardComponent {
     protected formStateExpense: boolean = false;
     protected formStateCategory: boolean = false;
     protected category?: Category;
-    protected expense?: Expense;
+    protected categories: Category[] = []
+    protected expense?: ExpenseResponse;
     private dates: number[] = []
     protected sortedDates: string[] = []
 
-    constructor(private router: Router, private expenseService: ExpenseService, private snackbarService: SnackbarService) {
+    constructor(private router: Router, private expenseService: ExpenseService, private snackbarService: SnackbarService, private categoryService: CategoryService) {
+
     }
     logout(): Promise<Boolean> {
         localStorage.clear()
@@ -75,7 +78,15 @@ export class DashboardComponent {
             this.logout()
         }
         this.getExpenses()
+        this.getCategories(this.user.id!)
         return Promise.resolve(true)
+    }
+
+    getCategories(id: string): void {
+        this.categoryService.getCategories(id).subscribe
+        ((categories: Category[]) => {
+            this.categories = categories
+        })
     }
 
     handleExpenseRequest(request: Request) {
@@ -108,6 +119,7 @@ export class DashboardComponent {
                     this.toggleFormCategory()
                     this.refreshExpenses()
                     this.category = undefined
+                    this.getCategories(this.user.id!)
                     break;
                 case "PATCH":
                     this.snackbarService.createSnackbar("success", "Categorie modifiée", 2000)
@@ -128,7 +140,7 @@ export class DashboardComponent {
     refreshExpenses() {
         this.getExpenses()
     }
-    deleteExpense(expense: Expense) {
+    deleteExpense(expense: ExpenseResponse) {
         try {
             this.expenseService.deleteExpense(expense).subscribe((_: any) => {
                 this.snackbarService.createSnackbar("success", "Dépense supprimée", 2000)
@@ -139,18 +151,18 @@ export class DashboardComponent {
         }
     }
 
-    editExpense(expense: Expense) {
+    editExpense(expense: ExpenseResponse) {
         this.expense = expense
         this.toggleFormExpense()
     }
 
     getExpenses() {
         // TODO: Faire une requeste dans le backend (et pas dans le front) pour récupérer les dépenses de l'utilisateur par rapport à la date
-        this.expenseService.getExpenses(this.user.id!).subscribe((expenses: Expense[]) => {
+        this.expenseService.getExpenses(this.user.id!).subscribe((expenses: ExpenseResponse[]) => {
             this.user.expenses = []
             this.dates = []
             this.user.expenses = expenses
-            expenses.forEach((expense: Expense) => {
+            expenses.forEach((expense: ExpenseResponse) => {
                 this.dates.push(expense.date)
             })
             this.sortedDates = this.sortDates(this.dates)
@@ -159,7 +171,7 @@ export class DashboardComponent {
     }
 
 
-    sortExpenses(expenses: Expense[]) {
+    sortExpenses(expenses: ExpenseResponse[]) {
         return expenses.sort((a, b) => dateToUnix(a.date) - dateToUnix(b.date))
     }
 

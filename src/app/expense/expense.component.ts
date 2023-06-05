@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExpenseService } from '../services/expense.service';
 import { expenseForm } from '../expense-form/expenseForm';
-import Expense from "../interface/Expense";
+import {ExpenseResponse} from "../interface/ExpenseResponse";
 import UserData from "../interface/UserData";
 import { faPenToSquare, faSortDown, faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import { dateToUnix, unixToDate } from '../utilities/dateFormat';
@@ -20,7 +20,7 @@ export class ExpenseComponent {
     faSortDown = faSortDown;
     faPenToSquare = faPenToSquare;
     faTrashCan = faTrashCan
-    @Input() expenses: Expense[] | null | undefined = []
+    @Input() expenses: ExpenseResponse[] | null | undefined = []
     @Input() sortedDates : string [] | null | undefined = []
     @Output() expenseDeleteEvent: EventEmitter<any> = new EventEmitter();
     @Output() expenseUpdateEvent: EventEmitter<any> = new EventEmitter();
@@ -31,11 +31,11 @@ export class ExpenseComponent {
     ngOnInit() {
     }
 
-    expenseUpdate(expense: Expense) {
+    expenseUpdate(expense: ExpenseResponse) {
         this.expenseUpdateEvent.emit(expense)
     }
 
-    expenseDelete(expense: Expense) {
+    expenseDelete(expense: ExpenseResponse) {
         this.expenseDeleteEvent.emit(expense)
     }
 

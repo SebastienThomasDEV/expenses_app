@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, map} from "rxjs";
 import Category from "../interface/Category";
-import Expense from "../interface/Expense";
+import {ExpenseResponse} from "../interface/ExpenseResponse";
 import {FormMode} from "../form-mode";
 
 
@@ -18,10 +18,25 @@ export class CategoryService {
 
   }
 
-  addCategory(expense: Expense) : Observable<any> {
+  getCategories(user_id:string) : Observable<any> {
     const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
-    return this.http.post(this.categoriesUrl, expense, {headers: headers}).pipe(map((data: any) => data))
+    return this.http.get(`${this.categoriesUrl}?user=${user_id}`, {headers: headers}).pipe(map((data: any) => data))
   }
+
+
+  addCategory(category: Category) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
+    return this.http.post(this.categoriesUrl, category, {headers: headers}).pipe(map((data: any) => data))
+  }
+  deleteCategory(category: Category) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
+    return this.http.delete(this.categoriesUrl + `/${category.id}`, {headers: headers}).pipe(map((data: any) => data))
+  }
+  updateCategory(category: Category) : Observable<any> {
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
+    return this.http.patch(this.categoriesUrl + `/${category.id}`, category, {headers: headers}).pipe(map((data: any) => data))
+  }
+
 
 
 }

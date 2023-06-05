@@ -11,7 +11,6 @@
                         <span class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">{{expense.amount}}€</span>
                         <span><fa-icon class="text-lg text-yellow-500" [icon]="faPenToSquare" (click)="expenseUpdate(expense)"></fa-icon></span>
                         <span><fa-icon class="text-lg text-red-600" [icon]="faTrashCan"  (click)="expenseDelete(expense)"></fa-icon></span>
-                        <div (click)="console.log(expense.category)">text</div>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -21,24 +20,4 @@
         </ng-container>
     </div>
 </div>
-<!--<div class="modal h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50">-->
-<!--    &lt;!&ndash; modal &ndash;&gt;-->
-<!--    <div class="bg-white rounded shadow-lg w-10/12 md:w-1/3">-->
-<!--        &lt;!&ndash; modal header &ndash;&gt;-->
-<!--        <div class="border-b px-4 py-2 flex justify-between items-center">-->
-<!--            <h3 class="font-semibold text-lg">Modal Title</h3>-->
-<!--            <button class="text-black close-modal">&cross;</button>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; modal body &ndash;&gt;-->
-<!--        <div class="p-3">-->
-<!--            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum, delectus cumque fugiat nemo ducimus quae deserunt cupiditate sapiente incidunt aut accusantium dolore assumenda vitae similique, exercitationem voluptatum praesentium laboriosam nam.-->
-<!--        </div>-->
-<!--        <div class="flex justify-end items-center w-100 border-t p-3">-->
-<!--            <button class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white mr-1 close-modal">Cancel</button>-->
-<!--            <button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white">Oke</button>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
 

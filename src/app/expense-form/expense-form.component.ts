@@ -1,11 +1,13 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {expenseForm} from "./expenseForm";
-import Expense from "../interface/Expense";
+import {ExpenseResponse, ExpenseRequest} from "../interface/ExpenseResponse";
 import Request from "../interface/Request";
 import UserData from "../interface/UserData";
 import {ExpenseService} from "../services/expense.service";
 import {FormMode} from "../form-mode";
-import {faPenToSquare, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faPenToSquare, faSortDown, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {CategoryService} from "../services/category.service";
+import Category from "../interface/Category";
 
 
 @Component({
@@ -31,8 +33,10 @@ export class ExpenseFormComponent {
         error: null
     }
 
+    categories: Category[] = []
 
-    constructor(protected expenseService: ExpenseService) {
+
+    constructor(protected expenseService: ExpenseService, private categoryService: CategoryService) {
     }
 
     expenseForm = expenseForm;
@@ -41,7 +45,14 @@ export class ExpenseFormComponent {
         token: localStorage.getItem('token'),
     }
 
+    getUserCategory() {
+        this.categoryService.getCategories(this.user.id!).subscribe((data: any) => {
+            this.categories = data
+        })
+    }
+
     ngOnInit() {
+        this.getUserCategory()
         if (this.expenseUpdate) {
             this.formMode = FormMode.Update
             this.expenseForm.reset()
@@ -55,7 +66,7 @@ export class ExpenseFormComponent {
         }
     }
 
-    addExpense(expense: Expense) {
+    addExpense(expense: ExpenseRequest) {
         try {
             this.expenseService.addExpense(expense).subscribe((data: any) => {
                 this.responseEvent.emit(
@@ -77,7 +88,7 @@ export class ExpenseFormComponent {
         }
     }
 
-    editExpense(expense: Expense) {
+    editExpense(expense: ExpenseRequest) {
         try {
             this.expenseService.updateExpense(expense, this.expenseUpdate.id).subscribe((data: any) => {
                 this.responseEvent.emit(
@@ -110,13 +121,15 @@ export class ExpenseFormComponent {
     onSubmit() {
         switch (this.formMode) {
             case FormMode.Create:
-                const expense: Expense = this.expenseForm.value
+                const expense: ExpenseRequest = this.expenseForm.value
                 expense.userEntity = "/api/users/" + this.user.id
+                expense.category = "/api/categories/" + expense.category
                 this.addExpense(expense)
                 this.expenseForm.reset()
                 break
             case FormMode.Update:
-                const expenseUpdate: Expense = this.expenseForm.value
+                const expenseUpdate: ExpenseRequest = this.expenseForm.value
+                expenseUpdate.category = "/api/categories/" + expenseUpdate.category
                 expenseUpdate.userEntity = "/api/users/" + this.user.id
                 this.editExpense(expenseUpdate)
                 this.expenseForm.reset()
@@ -125,6 +138,7 @@ export class ExpenseFormComponent {
         }
     }
 
-    protected readonly faPenToSquare = faPenToSquare;
+    protected readonly faSortDown = faSortDown;
+    protected readonly console = console;
 }
 

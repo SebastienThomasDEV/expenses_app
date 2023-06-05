@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {loginForm} from "./loginForm";
 import {SnackbarService} from "../services/snackbar.service";
 import UserData from "../interface/UserData";
-import Expense from "../interface/Expense";
+import {ExpenseResponse} from "../interface/ExpenseResponse";
 
 
 @Component({

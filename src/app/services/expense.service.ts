@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, map} from "rxjs";
-import Expense from "../interface/Expense";
+import {ExpenseRequest, ExpenseResponse} from "../interface/ExpenseResponse";
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class ExpenseService {
 
   }
 
-  addExpense(expense: Expense) : Observable<any> {
+  addExpense(expense: ExpenseRequest) : Observable<any> {
     const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
     return this.http.post(this.expenseUrl, expense, {headers: headers}).pipe(map((data: any) => data))
   }
@@ -23,12 +23,12 @@ export class ExpenseService {
     return this.http.get(`${this.expenseUrl}?userEntity=${user_id}`, {headers: headers}).pipe(map((data: any) => data))
   }
 
-  deleteExpense(expense: Expense) : Observable<any> {
+  deleteExpense(expense: ExpenseResponse) : Observable<any> {
     const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
     return this.http.delete(`${this.expenseUrl}/${expense.id}`, {headers: headers}).pipe(map((data: any) => data))
   }
 
-  updateExpense(updatedExpense: Expense, expenseId: number ) : Observable<any> {
+  updateExpense(updatedExpense: ExpenseRequest, expenseId: number ) : Observable<any> {
     const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`).set("Content-Type", "application/merge-patch+json")
     return this.http.patch(`${this.expenseUrl}/${expenseId}`, updatedExpense, {headers: headers}).pipe(map((data: any) => data))
   }
